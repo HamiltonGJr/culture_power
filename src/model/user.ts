@@ -1,23 +1,23 @@
 import { mongoose } from '../config/connection';
 
 const UserSchema = new mongoose.Schema({
-  Name: {
+  name: {
     type: String
   },
-  Email: {
+  email: {
     type: String
   },
-  Password: {
+  password: {
     type: String
   },
   jewelsAmount: {
     type: Number
   },
-  Products: {
+  products: {
     type: mongoose.Types.ObjectId,
     ref: 'products'
   },
-  Photo: {
+  photo: {
     type: String
   },
   createdAt: {
