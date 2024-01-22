@@ -1,6 +1,7 @@
 import { mongoose } from '../config/connection';
+import { IAdmin } from '../entities/interf.admin';
 
-const AdminSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema<IAdmin>({
   name: {
     type: String
   },
@@ -20,4 +21,4 @@ const AdminSchema = new mongoose.Schema({
   }
 });
 
-export const Admin = mongoose.model('admins', AdminSchema);
+export const Admin = mongoose.model<IAdmin>('admins', AdminSchema);

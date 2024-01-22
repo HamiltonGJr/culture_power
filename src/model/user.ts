@@ -1,6 +1,7 @@
 import { mongoose } from '../config/connection';
+import { IUser } from '../entities/interf.user'
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
     required: true
@@ -35,4 +36,4 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-export const User = mongoose.model('users', UserSchema);
+export const User = mongoose.model<IUser>('users', UserSchema);

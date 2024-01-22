@@ -1,6 +1,7 @@
 import { mongoose } from '../config/connection';
+import { IProduct } from '../entities/interf.product';
 
-const ProductSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema<IProduct>({
   name: {
     type: String,
     required: true
@@ -9,7 +10,7 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  amout: {
+  amount: {
     type: Number,
     required: true
   },
@@ -31,4 +32,4 @@ const ProductSchema = new mongoose.Schema({
   }
 });
 
-export const Product = mongoose.model('products', ProductSchema);
+export const Product = mongoose.model<IProduct>('products', ProductSchema);
