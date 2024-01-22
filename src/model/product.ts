@@ -2,19 +2,24 @@ import { mongoose } from '../config/connection';
 
 const ProductSchema = new mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   value: {
-    type: Number
+    type: Number,
+    required: true
   },
   amout: {
-    type: Number
+    type: Number,
+    required: true
   },
   description: {
-    type: String
+    type: String,
+    required: true
   },
   photo: {
-    type: String
+    type: String,
+    required: true
   },
   createdAt: {
     type: Date,
