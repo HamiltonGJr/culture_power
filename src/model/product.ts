@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IProduct } from '../entities/product.interf';
+import { IProduct } from '../entitie/product.interf';
 
 const ProductSchema = new mongoose.Schema<IProduct>({
   name: {

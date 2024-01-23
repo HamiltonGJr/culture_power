@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IAdmin } from '../entities/admin.interf';
+import { IAdmin } from '../entitie/admin.interf';
 
 const AdminSchema = new mongoose.Schema<IAdmin>({
   name: {

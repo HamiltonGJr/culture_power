@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IUser } from '../entities/user.interf'
+import { IUser } from '../entitie/user.interf'
 
 const UserSchema = new mongoose.Schema<IUser>({
   name: {
