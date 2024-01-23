@@ -7,8 +7,8 @@ export interface IUser {
   photo: string
   createdAt: Date
   uptadeAt: Date
-  _id: string
-  __v: number
+  _id?: string
+  __v?: number
 };
 
 export interface IUserDTO {
