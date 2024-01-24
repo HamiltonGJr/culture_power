@@ -32,6 +32,7 @@ User
 <h3 align="center">~ Cenários de uso ~</h3>
 
 1. **Cadastro de Usuário**
-   - Informações necessárias: nome, e-mail, senha, foto
-   - Não permitir o cadastro se um usuário com o mesmo e-mail já existir
-   - Criptografar a senha antes de armazenar no banco de dados
+
+- [x] Informações necessárias: nome, e-mail, senha, foto
+- [x] Não permitir o cadastro se um usuário com o mesmo e-mail já existir
+- [x] Criptografar a senha antes de armazenar no banco de dados
