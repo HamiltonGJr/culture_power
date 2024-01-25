@@ -1,5 +1,5 @@
 import { User } from '../model/user';
-import {Crypto} from './crypto.service';
+import { Crypto } from './crypto.service';
 
 const crypto = new Crypto();
 
@@ -8,13 +8,7 @@ export class UserService {
     try {
       const thisUserExists = await User.findOne({ email });
 
-      if (thisUserExists != null) {
-        const messege = 'Email already registered, try again!';
-
-        return messege;
-      };
-
-      return email;
+      return thisUserExists;
     } catch (error) {
       console.log(error);
     };
@@ -23,6 +17,12 @@ export class UserService {
   async created(name: string, email: string, password: string, photo: string): Promise<any> {
     try {
       await this.searchRegisteredEmail(email);
+
+      if (email != null) {
+        const messege = 'Email already registered, try again!';
+
+        return messege;
+      };
 
       await crypto.cryptoPassword(password);
 
