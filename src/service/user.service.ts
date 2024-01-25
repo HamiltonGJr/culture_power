@@ -1,22 +1,35 @@
-import { hash } from "bcrypt";
-import { User } from "../model/user";
+import { User } from '../model/user';
+import {Crypto} from './crypto.service';
+
+const crypto = new Crypto();
 
 export class UserService {
-  async created(name: string, email: string, password: string, photo: string): Promise<any> {
+  async searchRegisteredEmail(email: string): Promise<any> {
     try {
       const thisUserExists = await User.findOne({ email });
+
       if (thisUserExists != null) {
         const messege = 'Email already registered, try again!';
 
         return messege;
       };
 
-      const passwordHashed = await hash(password, 8);
+      return email;
+    } catch (error) {
+      console.log(error);
+    };
+  };
+
+  async created(name: string, email: string, password: string, photo: string): Promise<any> {
+    try {
+      await this.searchRegisteredEmail(email);
+
+      await crypto.cryptoPassword(password);
 
       const newUser = await new User({
         name,
         email,
-        password: passwordHashed,
+        password,
         photo
       }).save();
 
