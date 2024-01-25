@@ -1,20 +1,26 @@
 import { Router } from 'express';
 import { UserService } from '../service/user.service';
+import { UserRepository } from '../repository/user.repository';
+import { Crypto } from '../service/crypto.service';
 
 const router = Router();
 
-const service = new UserService();
+const repository = new UserRepository();
+const service = new UserService(repository);
+const crypto = new Crypto();
 
 router.post('/', async (request, response) => {
   const { name, email, password, photo } = request.body;
 
-  // 1 - Buscar se existe um usuario com email
-  // 2 - Se existir retornar erro
-  // 3 - Criar um hash para senha
-  // 4 - Salvar no banco de dados
-  // O que for verbo eu crio um serviço
+  const existUser = await service.findUserByEmail(email);
+  if (existUser != null) {
+    response.status(409).send({ messege: 'Conflict: User with the provided email already exists. Please choose a different email.' });
+    return;
+  };
 
-  const newUser = await service.created(name, email, password, photo);
+  const passwordHashed = await crypto.cryptoPassword(password);
+
+  const newUser = await service.create(name, email, passwordHashed, photo);
 
   response.status(201).send({ user: newUser });
 });
