@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema<IUser>({
     required: true
   },
   jewelsAmount: {
-    type: Number
+    type: Number,
+    dafault: 0
   },
   products: {
     type: mongoose.Types.ObjectId,
