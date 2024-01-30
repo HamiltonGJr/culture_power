@@ -5,7 +5,7 @@ export interface TypedRequest<
   Params extends Yup.ISchema<any, any, any, any> = any,
   Query extends Yup.ISchema<any, any, any, any> = any,
 > {
-  body: Yup.InferType<Body>
-  params: Yup.InferType<Params>
+  body: Yup.InferType<Body>,
+  params: Yup.InferType<Params>,
   query: Yup.InferType<Query>
-}
+};

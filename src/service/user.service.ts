@@ -3,9 +3,9 @@ import { UserRepository } from '../repository/user.repository';
 
 export class UserService {
   // Fazer uma interface
-  repository: UserRepository
+  repository: UserRepository;
   constructor(repository: UserRepository) {
-    this.repository = repository
+    this.repository = repository;
   };
 
   // Este método ficaria no repository?
