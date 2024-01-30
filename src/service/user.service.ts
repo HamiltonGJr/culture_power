@@ -14,8 +14,8 @@ export class UserService {
       return existUser;
   };
 
-  async create(name: string, email: string, password: string, photo: string) {
-      const user = await this.repository.save(name, email, password, photo);
+  async create(name: string, email: string, password: string, jewelsAmount: number, photo: string) {
+      const user = await this.repository.save(name, email, password, jewelsAmount ,photo);
       return user;
   };
 };

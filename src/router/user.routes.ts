@@ -11,7 +11,7 @@ const repository = new UserRepository();
 const service = new UserService(repository);
 
 router.post('/', validateRouter(userSchema.CreatePerson.schema), async (request, response) => {
-    const { name, email, password, photo } = request.body;
+    const { name, email, password, jewelsAmount, photo } = request.body;
 
     const existUser = await service.findUserByEmail(email);
     if (existUser != null) {
@@ -21,7 +21,7 @@ router.post('/', validateRouter(userSchema.CreatePerson.schema), async (request,
 
     const passwordHashed = await new Crypto().cryptoPassword(password);
 
-    const newUser = await service.create(name, email, passwordHashed, photo);
+    const newUser = await service.create(name, email, passwordHashed, jewelsAmount, photo);
 
     response.status(201).send({ user: newUser });
 });
