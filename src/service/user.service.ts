@@ -8,6 +8,7 @@ export class UserService {
     this.repository = repository
   };
 
+  // Este método ficaria no repository?
   async findUserByEmail(email: string) {
       const existUser = await User.findOne({ email });
       return existUser;
