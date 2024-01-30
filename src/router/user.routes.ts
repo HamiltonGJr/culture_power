@@ -1,17 +1,16 @@
 import { Router } from 'express';
 import { UserService } from '../service/user.service';
-import { UserRepository } from '../repository/user.repository';
 import { Crypto } from '../service/crypto.service';
-import { UserSchema } from '../schema/user.schema';
+import { UserRepository } from '../repository/user.repository';
+import * as userSchema from '../schema/user.schema';
+import validateRouter from '../middleware/validateRouter';
 
 const router = Router();
 
 const repository = new UserRepository();
 const service = new UserService(repository);
 
-router.post('/', async (request, response) => {
-  try {
-    await UserSchema.validate(request.body);
+router.post('/', validateRouter(userSchema.CreatePerson.schema), async (request, response) => {
     const { name, email, password, photo } = request.body;
 
     const existUser = await service.findUserByEmail(email);
@@ -25,10 +24,6 @@ router.post('/', async (request, response) => {
     const newUser = await service.create(name, email, passwordHashed, photo);
 
     response.status(201).send({ user: newUser });
-  } catch (error) {
-    const { errors }: any = error
-    response.status(400).send({error: errors});
-  };
 });
 
 export default router;
