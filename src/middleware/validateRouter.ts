@@ -6,7 +6,7 @@ export default (schema: any) => async (
   response: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log(`Validando a rota: ${request.method} ${request.path}`);
+  console.log(`Validando a rota: ${request.method} | ${request.path} | `, new Date());
 
   try {
     await schema.validate({
