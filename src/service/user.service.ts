@@ -1,4 +1,3 @@
-import { User } from '../model/user';
 import { UserRepository } from '../repository/user.repository';
 
 export class UserService {
@@ -6,12 +5,6 @@ export class UserService {
   repository: UserRepository;
   constructor(repository: UserRepository) {
     this.repository = repository;
-  };
-
-  // Este método ficaria no repository?
-  async findUserByEmail(email: string) {
-      const existUser = await User.findOne({ email });
-      return existUser;
   };
 
   async create(name: string, email: string, password: string, jewelsAmount: number, photo: string) {

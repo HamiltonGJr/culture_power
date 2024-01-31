@@ -13,7 +13,7 @@ const service = new UserService(repository);
 router.post('/', validateRouter(userSchema.CreatePerson.schema), async (request, response) => {
     const { name, email, password, jewelsAmount, photo } = request.body;
 
-    const existUser = await service.findUserByEmail(email);
+    const existUser = await repository.findUserByEmail(email);
     if (existUser != null) {
       response.status(409).send({ messege: 'Conflict: User with the provided email already exists. Please choose a different email.' });
       return;
