@@ -8,7 +8,6 @@ export class UserService {
   };
 
   async create(name: string, email: string, password: string, jewelsAmount: number, photo: string) {
-      const user = await this.repository.save(name, email, password, jewelsAmount ,photo);
-      return user;
+    return await this.repository.save(name, email, password, jewelsAmount ,photo);
   };
 };

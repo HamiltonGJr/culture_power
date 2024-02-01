@@ -2,12 +2,10 @@ import { User } from '../model/user';
 
 export class UserRepository {
   async findUserByEmail(email: string) {
-    const existUser = await User.findOne({ email });
-    return existUser;
+    return await User.findOne({ email }).exec();
   };
 
   async save(name: string, email: string, password: string, jewelsAmount: number, photo: string) {
-    const registeredUser = await new User({ name, email, password, jewelsAmount, photo }).save();
-    return registeredUser;
+    return await new User({ name, email, password, jewelsAmount, photo }).save();
   };
 };
