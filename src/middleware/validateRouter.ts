@@ -17,6 +17,6 @@ export default (schema: any) => async (
     ); next();
   } catch(error) {
     const {name, message, errors} = error as ValidationError;
-    response.status(406).send({ name, message, errors });
+    response.status(422).send({ name, message, errors });
   };
 };
