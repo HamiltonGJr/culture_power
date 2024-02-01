@@ -11,19 +11,17 @@ const repository = new UserRepository();
 const service = new UserService(repository);
 
 router.post('/', validateRouter(userSchema.CreatePerson.schema), async (request, response) => {
-    const { name, email, password, jewelsAmount, photo } = request.body;
+  const { name, email, password, jewelsAmount, photo } = request.body;
 
-    const existUser = await repository.findUserByEmail(email);
-    if (existUser != null) {
-      response.status(409).send({ messege: 'Conflict: User with the provided email already exists. Please choose a different email.' });
-      return;
-    };
+  const existUser = await repository.findUserByEmail(email);
+  if (existUser)
+    return response.status(409).send({ message: 'Conflict: User with the provided email already exists. Please choose a different email.' });
 
-    const passwordHashed = await new Crypto().cryptoPassword(password);
+  const passwordHashed = await new Crypto().cryptoPassword(password);
 
-    const newUser = await service.create(name, email, passwordHashed, jewelsAmount, photo);
+  const newUser = await service.create(name, email, passwordHashed, jewelsAmount, photo);
 
-    response.status(201).send({ user: newUser });
+  response.status(201).send({ user: newUser });
 });
 
 export default router;
