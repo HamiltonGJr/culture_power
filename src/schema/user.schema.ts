@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { IUserDTO } from '../entitie/user.interf';
+import { IUserDTO } from '../entitie/IUser';
 import { TypedRequest } from '../util/typedRequest';
 
 const UserSchema = Yup.object<IUserDTO>({
