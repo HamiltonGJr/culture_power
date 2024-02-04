@@ -14,4 +14,12 @@ export class UserService implements IUserService {
   async create(name: string, email: string, password: string, jewelsAmount: number, photo: string) {
     return await this.repository.save(name, email, password, jewelsAmount ,photo);
   };
+
+  async userById (id: string) {
+    return await this.repository.findUserById(id);
+  };
+
+  async userByIdAndUpdate(id: string, file: Express.Multer.File) {
+    return await this.repository.findUserByIdAndUpdate(id, file);
+  };
 };
