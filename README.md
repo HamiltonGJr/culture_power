@@ -42,10 +42,10 @@ User {
 
 2. **Login de Usuário**
 
-- [ ] Informações necessárias: e-mail e senha.
-- [ ] Não gerar um token se não existir um usuário com o e-mail fornecido.
-- [ ] Não gerar um token se a senha enviada não for compatível com a do banco de dados.
-- [ ] Gerar um token e retornar se as credenciais estiverem corretas.
+- [x] Informações necessárias: e-mail e senha.
+- [x] Não gerar um token se não existir um usuário com o e-mail fornecido.
+- [x] Não gerar um token se a senha enviada não for compatível com a do banco de dados.
+- [x] Gerar um token e retornar se as credenciais estiverem corretas.
 
 <h3>Tecnologias utilizadas:</h3>
 
