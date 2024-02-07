@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import { Token } from '../provider/token';
 
 export function auth(request: Request, response: Response, next: NextFunction) {
   const authHeader = request.headers.authorization;
@@ -18,11 +18,13 @@ export function auth(request: Request, response: Response, next: NextFunction) {
   if(tokenSchema !== 'Bearer')
     return response.status(401).send({ error: 'Token error 02' });
 
-  jwt.verify(token, process.env.CRYPTO_KEY as string, (error, decoded) => {
-    if(error)
-      return response.status(401).send({ error: 'Invalid Token' });
+  const verify = new Token().verifyJWT(token, process.env.CRYPTO_KEY as string);
 
-    request.body.userId = decoded!.sub as string;
-  });
+  const { sucess, payload } = verify;
+
+  if(!sucess)
+    return response.status(401).send({ error: 'Invalid Token' });
+
+  request.body.userId = payload;
   next();
 };
