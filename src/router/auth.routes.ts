@@ -3,8 +3,8 @@ import validateRouter from '../middleware/validateRouter';
 import * as authSchema from '../schema/auth.schema';
 import { UserRepository } from '../repository/user.repository';
 import { UserService } from '../service/user.service';
-import { compare } from 'bcrypt';
 import { Token } from '../provider/token';
+import { Crypto } from '../provider/crypto';
 
 const router = Router();
 
@@ -22,7 +22,7 @@ router.post(
     if (!user)
       return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
 
-    const thesePasswordsAreTheSame = await compare(password, user.password);
+    const thesePasswordsAreTheSame = new Crypto().comperePassword(password, user.password);
     if(!thesePasswordsAreTheSame)
       return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
 
