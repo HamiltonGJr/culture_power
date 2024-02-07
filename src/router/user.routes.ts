@@ -7,7 +7,6 @@ import * as photoSchema from '../schema/photo.schema';
 import validateRouter from '../middleware/validateRouter';
 import { auth } from '../middleware/auth';
 import { upload } from '../middleware/uploads';
-import { User } from '../model/User';
 
 const router = Router();
 
@@ -19,7 +18,7 @@ router.post(
   validateRouter(userSchema.CreatePerson.schema),
   auth,
   async (request, response) => {
-    console.log(`ID do usuário logado: ${request.body.userId}`);
+    console.log(`ID do usuário logado: ${request.body.userId.sub}`);
 
     const { name, email, password, jewelsAmount, photo } = request.body;
 
@@ -35,18 +34,16 @@ router.post(
   }
 );
 
-router.post(
+router.patch(
   '/uploadPhoto/:id',
   validateRouter(photoSchema.CreatePerson.schema),
   auth,
   upload.single('userPhoto'),
   async (request, response) => {
     const { file } = request;
-
     const { id } = request.params;
 
-    // const photoToUpdate = await service.userByIdAndUpdate(id, file);
-    const photoToUpdate = await User.findByIdAndUpdate(id, { photo: file?.filename });
+    const photoToUpdate = await service.userByIdAndUpdate(id, file as Express.Multer.File);
     if(!photoToUpdate)
       return response.status(404).send({ message: 'Error: User not found.' });
 
@@ -57,9 +54,9 @@ router.post(
     existUser.__v += 1;
     existUser.uptadeAt = new Date();
 
-    await existUser.save();
+    const userUpdatedPhoto = await service.userUpdatedPhoto(existUser);
 
-    response.status(200).send({ user: existUser });
+    response.status(200).send(userUpdatedPhoto);
   }
 );
 
