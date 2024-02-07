@@ -6,4 +6,6 @@ export interface IUserRepository {
   findUserById: (id: string) => object;
 
   findUserByIdAndUpdate: (id: string, file: Express.Multer.File) => object;
+
+  userUpdated: (user: object) => object;
 };

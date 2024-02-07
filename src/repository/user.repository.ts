@@ -11,10 +11,14 @@ export class UserRepository implements IUserRepository{
   };
 
   async findUserById(id: string) {
-    return await User.findById({ id }).exec();
+    return await User.findById(id).exec();
   };
 
   async findUserByIdAndUpdate(id: string, file: Express.Multer.File) {
     return await User.findByIdAndUpdate(id, { photo: file?.filename });
+  };
+
+  async userUpdated(user: object) {
+    return await new User(user).save();
   };
 };
