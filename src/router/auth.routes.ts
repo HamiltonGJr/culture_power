@@ -3,13 +3,18 @@ import validateRouter from '../middleware/validateRouter';
 import * as authSchema from '../schema/auth.schema';
 import { UserRepository } from '../repository/user.repository';
 import { UserService } from '../service/user.service';
+import { AdminRepository } from '../repository/admin.repository';
+import { AdminService } from '../service/admin.service';
 import { Token } from '../provider/token';
 import { Crypto } from '../provider/crypto';
 
 const router = Router();
 
-const repository = new UserRepository();
-const service = new UserService(repository);
+const userRepository = new UserRepository();
+const userService = new UserService(userRepository);
+
+const adminRepository = new AdminRepository();
+const adminService = new AdminService(adminRepository);
 
 router.post(
   '/',
@@ -18,19 +23,40 @@ router.post(
   async (request, response) => {
     const { email, password } = request.body;
 
-    const user = await service.userByEmail(email);
-    if (!user)
-      return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
+    let user;
+    let admin;
+    let isAdmin = false;
 
-    const thesePasswordsAreTheSame = new Crypto().comperePassword(password, user.password);
-    if(!thesePasswordsAreTheSame)
-      return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
+    user = await userService.userByEmail(email);
+    if(user) {
+      const thesePasswordsAreTheSame = new Crypto().comperePassword(password, user.password);
+      if(await thesePasswordsAreTheSame) {
+        user.password = '';
+        isAdmin = false;
+      } else {
+        user = null;
+      };
+    } else if (user === null) {
+      admin = await adminService.adminByEmail(email);
+      if(admin) {
+        const thesePasswordsAreTheSame = new Crypto().comperePassword(password, admin.password);
+        if(await thesePasswordsAreTheSame) {
+          isAdmin = true;
+        } else {
+          return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
+        };
+      } else {
+        return response.status(401).send({ message: 'Unauthorized: Invalid credentials. Check your email and password and try again.' });
+      };
+    };
 
-    user.password = '';
+    const token = new Token().tokenJWT(isAdmin ? user?.id : admin?.id);
 
-    const token = new Token().tokenJWT(user.id);
-
-    response.status(200).send({ message: 'Success: User authentication successful.', user, token });
+    response.status(200).send({
+      message: isAdmin ? 'Success: Admin authentication successful.' : 'Success: User authentication successful.',
+      userOrAdmin: isAdmin ? { admin } : { user },
+      token
+    })
   }
 );
 
