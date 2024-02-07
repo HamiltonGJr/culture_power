@@ -22,4 +22,8 @@ export class UserService implements IUserService {
   async userByIdAndUpdate(id: string, file: Express.Multer.File) {
     return await this.repository.findUserByIdAndUpdate(id, file);
   };
+
+  async userUpdatedPhoto(user: object) {
+    return await this.repository.userUpdated(user);
+  };
 };
