@@ -47,6 +47,13 @@ User {
 - [x] Não gerar um token se a senha enviada não for compatível com a do banco de dados.
 - [x] Gerar um token e retornar se as credenciais estiverem corretas.
 
+3. **Login de Admin**
+
+- [x] Informações necessárias: e-mail e senha
+- [x] Não gerar um token se não existir um admin com o e-mail fornecido
+- [x] Não gerar um token se a senha enviada não for compatível com a do banco de dados
+- [x] Gerar um token e retornar se as credenciais estiverem corretas
+
 <h3>Tecnologias utilizadas:</h3>
 
 1. [BCrypt;](https://www.npmjs.com/package/bcrypt)
