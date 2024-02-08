@@ -16,6 +16,9 @@ const userService = new UserService(userRepository);
 const adminRepository = new AdminRepository();
 const adminService = new AdminService(adminRepository);
 
+const token = new Token();
+const crypto = new Crypto();
+
 router.post(
   '/',
   validateRouter
@@ -29,7 +32,7 @@ router.post(
 
     user = await userService.userByEmail(email);
     if(user) {
-      const thesePasswordsAreTheSame = new Crypto().comperePassword(password, user.password);
+      const thesePasswordsAreTheSame = crypto.comperePassword(password, user.password);
       if(await thesePasswordsAreTheSame) {
         user.password = '';
         isAdmin = false;
@@ -39,7 +42,7 @@ router.post(
     } else if (user === null) {
       admin = await adminService.adminByEmail(email);
       if(admin) {
-        const thesePasswordsAreTheSame = new Crypto().comperePassword(password, admin.password);
+        const thesePasswordsAreTheSame = crypto.comperePassword(password, admin.password);
         if(await thesePasswordsAreTheSame) {
           isAdmin = true;
         } else {
@@ -50,7 +53,7 @@ router.post(
       };
     };
 
-    const token = new Token().tokenJWT(isAdmin ? user?.id : admin?.id);
+    token.tokenJWT(isAdmin ? user?.id : admin?.id);
 
     response.status(200).send({
       message: isAdmin ? 'Success: Admin authentication successful.' : 'Success: User authentication successful.',
