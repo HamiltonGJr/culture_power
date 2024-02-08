@@ -30,7 +30,13 @@ router.post(
 
     const passwordHashed = await crypto.cryptoPassword(password);
 
-    const newUser = await service.create(name, email, passwordHashed, jewelsAmount, photo);
+    const newUser = await service.create(
+      name,
+      email,
+      passwordHashed,
+      jewelsAmount,
+      photo
+    );
 
     response.status(201).send({ user: newUser });
   }
@@ -46,11 +52,11 @@ router.patch(
     const { id } = request.params;
 
     const photoToUpdate = await service.userByIdAndUpdate(id, file as Express.Multer.File);
-    if(!photoToUpdate)
+    if (!photoToUpdate)
       return response.status(404).send({ message: 'Error: User not found.' });
 
     const existUser = await service.userById(id);
-    if(!existUser)
+    if (!existUser)
       return response.status(404).send({ message: 'Error: User not found.' });
 
     existUser.__v += 1;
