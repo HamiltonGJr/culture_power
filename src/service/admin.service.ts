@@ -10,4 +10,8 @@ export class AdminService implements IAdminService {
   async adminByEmail (email: string) {
     return await this.repository.findAdminByEmail(email);
   };
+
+  async adminById (id: string) {
+    return await this.repository.findAdminById(id);
+  };
 };
