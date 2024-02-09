@@ -7,6 +7,7 @@ import validateRouter from '../middleware/validateRouter';
 import { auth } from '../middleware/auth';
 import { upload } from '../middleware/uploads';
 import { Crypto } from '../provider/crypto';
+import { isAdmin } from '../middleware/verifyPermission';
 
 const router = Router();
 
@@ -19,9 +20,8 @@ router.post(
   '/',
   validateRouter(userSchema.CreatePerson.schema),
   auth,
+  isAdmin,
   async (request, response) => {
-    console.log(`ID do usuário logado: ${request.body.userId.sub}`);
-
     const { name, email, password, jewelsAmount, photo } = request.body;
 
     const existUser = await service.userByEmail(email);
