@@ -1,5 +1,5 @@
 import { UserRepository } from '../repository/user.repository';
-import { IUserService } from './IUser.service';
+import { IUserService } from './interfaces/IUser.service';
 
 export class UserService implements IUserService {
   repository: UserRepository;

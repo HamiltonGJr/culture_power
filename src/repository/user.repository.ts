@@ -1,5 +1,5 @@
 import { User } from '../model/User';
-import { IUserRepository } from './IUser.repository';
+import { IUserRepository } from './interfaces/IUser.repository';
 
 export class UserRepository implements IUserRepository{
   async findUserByEmail(email: string) {

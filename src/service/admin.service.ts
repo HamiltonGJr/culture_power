@@ -1,5 +1,5 @@
 import { AdminRepository } from '../repository/admin.repository';
-import { IAdminService } from './IAdmin.service';
+import { IAdminService } from './interfaces/IAdmin.service';
 
 export class AdminService implements IAdminService {
   repository: AdminRepository;

@@ -1,5 +1,5 @@
 import { Admin } from '../model/Admin';
-import { IAdminRepository } from './IAdmin.repository';
+import { IAdminRepository } from './interfaces/IAdmin.repository';
 
 export class AdminRepository implements IAdminRepository{
   async findAdminByEmail(email: string) {
