@@ -8,7 +8,7 @@ const UserSchema = Yup.object<IUserDTO>({
   password: Yup.string().required().min(8),
   jewelsAmount: Yup.number().default(0),
   products: Yup.object(),
-  photo: Yup.string().required()
+  photo: Yup.string().default('_photo_')
 });
 
 export namespace CreatePerson {
