@@ -54,13 +54,53 @@ User {
 - [x] Não gerar um token se a senha enviada não for compatível com a do banco de dados
 - [x] Gerar um token e retornar se as credenciais estiverem corretas
 
+4. **Visualizar Usuário Logado (ROTA PRIVADA)**
+
+- [x] Retornar os dados do usuário logado
+
+5. **Cadastro de Produto (ROTA PRIVADA - ADMIN)**
+
+- [x] Informações necessárias: nome, valor, quantidade, descrição e foto
+- [x] Não permitir o envio se o usuário que está executando a ação não for um administrador
+
+6. **Edição de Produto (ROTA PRIVADA - ADMIN)**
+
+- [] Informações necessárias: nome, valor, quantidade, descrição e foto
+- [] Não permitir o envio se o usuário que está executando a ação não for um administrador
+
+7. **Listar Todos os Produtos (ROTA PRIVADA)**
+
+- [] Deve listar os produtos com quantidade maior que 0
+
+8. **Buscar Produto por ID (ROTA PRIVADA)**
+
+- [] Deve ser informado: id
+- [] Deve retornar o produto caso encontrado
+
+9. **Enviar Joia para Usuário (ROTA PRIVADA - ADMIN)**
+
+- [] Informações necessárias: quantidade de joia, ID do usuário
+- [] Não permitir o envio se o usuário não existirem
+- [] Não permitir o envio se o usuário que está executando a ação não for um administrador
+
+10. **Resgatar Produto (ROTA PRIVADA)**
+
+- [] Informações necessárias: ID do produto, ID do usuário
+- [] Não permitir o resgate se o produto ou o usuário não existirem
+- [] Não permitir o resgate se o usuário não tiver joias suficientes
+- [] Decrementar o valor do produto pela quantidade de joias
+- [] Decrementar a quantidade do produto
+
 <h3>Tecnologias utilizadas:</h3>
 
-1. [BCrypt;](https://www.npmjs.com/package/bcrypt)
-2. [DotEnv;](https://www.npmjs.com/package/dotenv)
-3. [Express;](https://expressjs.com/pt-br/)
-4. [Mongoose;](https://mongoosejs.com/)
-5. [Eslint;](https://eslint.org/docs/latest/use/getting-started)
-6. [Prettier;](https://prettier.io/docs/en/)
-7. [Ts-Node-Dev;](https://www.npmjs.com/package/ts-node-dev)
-8. [TypeScript;](https://www.typescriptlang.org/pt/docs/)
+1.  [BCrypt;](https://www.npmjs.com/package/bcrypt)
+2.  [DotEnv;](https://www.npmjs.com/package/dotenv)
+3.  [Express;](https://expressjs.com/pt-br/)
+4.  [JsonWebToken;](https://jwt.io/)
+5.  [Mongoose;](https://mongoosejs.com/)
+6.  [Multer;](https://www.npmjs.com/package/multer)
+7.  [Yup;](https://www.npmjs.com/package/yup)
+8.  [Eslint;](https://eslint.org/docs/latest/use/getting-started)
+9.  [Prettier;](https://prettier.io/docs/en/)
+10. [Ts-Node-Dev;](https://www.npmjs.com/package/ts-node-dev)
+11. [TypeScript;](https://www.typescriptlang.org/pt/docs/)
