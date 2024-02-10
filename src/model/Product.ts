@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema<IProduct>({
   },
   photo: {
     type: String,
-    required: true
+    default: '_photo_'
   },
   createdAt: {
     type: Date,

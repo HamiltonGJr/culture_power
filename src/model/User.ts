@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   },
   photo: {
     type: String,
-    required: true
+    default: '_photo_'
   },
   createdAt: {
     type: Date,
