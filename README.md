@@ -65,17 +65,17 @@ User {
 
 6. **Edição de Produto (ROTA PRIVADA - ADMIN)**
 
-- [ ] Informações necessárias: nome, valor, quantidade, descrição e foto
-- [ ] Não permitir o envio se o usuário que está executando a ação não for um administrador
+- [x] Informações necessárias: nome, valor, quantidade, descrição e foto
+- [x] Não permitir o envio se o usuário que está executando a ação não for um administrador
 
 7. **Listar Todos os Produtos (ROTA PRIVADA)**
 
-- [ ] Deve listar os produtos com quantidade maior que 0
+- [x] Deve listar os produtos com quantidade maior que 0
 
 8. **Buscar Produto por ID (ROTA PRIVADA)**
 
-- [ ] Deve ser informado: id
-- [ ] Deve retornar o produto caso encontrado
+- [x] Deve ser informado: id
+- [x] Deve retornar o produto caso encontrado
 
 9. **Enviar Joia para Usuário (ROTA PRIVADA - ADMIN)**
 
@@ -88,7 +88,7 @@ User {
 - [ ] Informações necessárias: ID do produto, ID do usuário
 - [ ] Não permitir o resgate se o produto ou o usuário não existirem
 - [ ] Não permitir o resgate se o usuário não tiver joias suficientes
-- [ ] Decrementar o valor do produto pela quantidade de joias
+- [ ] Decrementar a quantidade de joias pelo valor do produto
 - [ ] Decrementar a quantidade do produto
 
 <h3>Tecnologias utilizadas:</h3>
