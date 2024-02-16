@@ -7,5 +7,9 @@ export interface IUserService {
 
   userByIdAndUpdate: (id: string, file: Express.Multer.File) => object;
 
-  userUpdatedPhoto: (user: object) => object;
+  userUpdated: (user: object) => object;
+
+  userUpdatedJewels: (id: string, jewelsAmount: number) => object;
+
+  userIdAndUpdate: (id: string, user: object) => object;
 };

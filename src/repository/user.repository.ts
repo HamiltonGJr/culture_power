@@ -21,4 +21,12 @@ export class UserRepository implements IUserRepository{
   async userUpdated(user: object) {
     return await new User(user).save();
   };
+
+  async userUpdatedJewels(id: string, jewelsAmount: number) {
+    return await User.findByIdAndUpdate(id, { $inc: { jewelsAmount } });
+  };
+
+  async IdAndUpdate(id: string, user: object) {
+    return await User.findByIdAndUpdate(id, user);
+  }
 };

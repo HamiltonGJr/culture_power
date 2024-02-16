@@ -8,4 +8,8 @@ export interface IUserRepository {
   findUserByIdAndUpdate: (id: string, file: Express.Multer.File) => object;
 
   userUpdated: (user: object) => object;
+
+  userUpdatedJewels: (id: string, jewelsAmount: number) => object;
+
+  IdAndUpdate: (id: string, user: object) => object;
 };

@@ -25,4 +25,8 @@ export class ProductRepository implements IProductRepository {
   async findByID(id: string) {
     return await Product.findById(id);
   };
+
+  async productByIdAndUpdate(id: string, product: any) {
+    return await Product.findByIdAndUpdate(id, product);
+  }
 };

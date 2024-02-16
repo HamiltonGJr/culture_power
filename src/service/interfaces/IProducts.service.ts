@@ -10,4 +10,6 @@ export interface IProductService {
   find: () => object;
 
   findId: (id: string) => object;
+
+  productIdAndUpdate: (id: string, product: object) => object;
 };

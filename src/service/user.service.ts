@@ -23,7 +23,15 @@ export class UserService implements IUserService {
     return await this.repository.findUserByIdAndUpdate(id, file);
   };
 
-  async userUpdatedPhoto(user: object) {
+  async userUpdated(user: object) {
     return await this.repository.userUpdated(user);
   };
+
+  async userUpdatedJewels(id: string, jewelsAmount: number) {
+    return await this.repository.userUpdatedJewels(id, jewelsAmount);
+  };
+
+  async userIdAndUpdate(id: string, user: object) {
+    return await this.repository.IdAndUpdate(id, user);
+  }
 };

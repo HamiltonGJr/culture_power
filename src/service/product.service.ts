@@ -30,4 +30,8 @@ export class ProductService implements IProductService {
   async findId(id: string) {
     return await this.repository.findByID(id);
   };
+
+  async productIdAndUpdate(id: string, product: object) {
+    return await this.repository.productByIdAndUpdate(id, product);
+  }
 };
