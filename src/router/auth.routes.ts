@@ -61,7 +61,7 @@ router.post(
       } else {
         return response.status(401).send({
           message:
-            'TESTE - Unauthorized: Invalid credentials. Check your email and password and try again.',
+            'Unauthorized: Invalid credentials. Check your email and password and try again.',
         })
       }
     }
