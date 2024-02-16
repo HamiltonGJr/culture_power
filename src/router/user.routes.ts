@@ -30,20 +30,21 @@ const crypto = new Crypto()
 router.post(
   '/',
   validateRouter(userSchema.CreatePerson.schema),
-  auth,
-  isAdmin,
   async (request, response) => {
     const { name, email, password, jewelsAmount, photo } = request.body
 
-    const existUser = await userService.userByEmail(email)
-    if (existUser)
+    // Verifica se o usuário já existe pelo e-mail
+    const existingUser = await userService.userByEmail(email)
+    if (existingUser)
       return response.status(409).send({
         message:
           'Conflict: User with the provided email already exists. Please choose a different email.',
       })
 
+    // Criptografa a senha antes de salvar no banco de dados
     const passwordHashed = await crypto.cryptoPassword(password)
 
+    // Cria um novo usuário
     const newUser = await userService.create(
       name,
       email,
@@ -52,6 +53,7 @@ router.post(
       photo
     )
 
+    // Retorna o novo usuário criado
     response.status(201).send({ user: newUser })
   }
 )
