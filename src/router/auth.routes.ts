@@ -29,41 +29,48 @@ router.post(
     let admin
     let isAdmin = false
 
+    // Verifica se é um usuário
     user = await userService.userByEmail(email)
     if (user) {
-      if (await cryptoBC.comperePassword(password, user.password)) {
-        user.password = ''
-        isAdmin = false
-      } else {
-        user = null
-      }
+      const userPasswordCompared = await cryptoBC.comperePassword(
+        password,
+        user.password
+      )
+
+      if (userPasswordCompared) user.password = ''
+      isAdmin = false
+
+      if (!userPasswordCompared) user = null
     }
 
+    // Se não for um usuário, verifica se é um administrador
     if (user === null) {
       admin = await adminService.adminByEmail(email)
       if (admin) {
-        if (await cryptoBC.comperePassword(password, admin.password))
-          isAdmin = true
-        else
-          return response
-            .status(401)
-            .send({
-              message:
-                'Unauthorized: Invalid credentials. Check your email and password and try again.',
-            })
-      } else
-        return response
-          .status(401)
-          .send({
+        const adminPasswordCompared = await cryptoBC.comperePassword(
+          password,
+          admin.password
+        )
+        if (adminPasswordCompared) isAdmin = true
+
+        if (!adminPasswordCompared)
+          return response.status(401).send({
             message:
               'Unauthorized: Invalid credentials. Check your email and password and try again.',
           })
+      } else {
+        return response.status(401).send({
+          message:
+            'TESTE - Unauthorized: Invalid credentials. Check your email and password and try again.',
+        })
+      }
     }
 
+    // Gera o token de autenticação
     const id = isAdmin ? admin?._id.toString() : user?._id.toString()
-
     const token = tokenJWT.tokenJWT(id as string)
 
+    // Retorna a resposta com sucesso
     response.status(200).send({
       message: isAdmin
         ? 'Success: Admin authentication successful.'
