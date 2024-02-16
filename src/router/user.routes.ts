@@ -5,14 +5,14 @@ import { AdminRepository } from '../repository/admin.repository';
 import { AdminService } from '../service/admin.service';
 import { ProductService } from '../service/product.service';
 import { ProductRepository } from '../repository/product.repository';
+import validateRouter from '../middleware/validateRouter';
 import * as userSchema from '../schema/user.schema';
 import * as photoSchema from '../schema/photo.schema';
 import * as jewelsAmountSchema from '../schema/amount.schema';
-import validateRouter from '../middleware/validateRouter';
 import { auth } from '../middleware/auth';
+import { isAdmin } from '../middleware/verifyPermission';
 import { upload } from '../middleware/uploads';
 import { Crypto } from '../provider/crypto';
-import { isAdmin } from '../middleware/verifyPermission';
 
 const router = Router();
 

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import validateRouter from '../middleware/validateRouter';
-import * as productSchema from '../schema/product.schema';
 import { ProductRepository } from '../repository/product.repository';
 import { ProductService } from '../service/product.service';
+import validateRouter from '../middleware/validateRouter';
+import * as productSchema from '../schema/product.schema';
 import { auth } from '../middleware/auth';
 import { isAdmin } from '../middleware/verifyPermission';
 

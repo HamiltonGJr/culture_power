@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import validateRouter from '../middleware/validateRouter';
-import * as authSchema from '../schema/auth.schema';
 import { UserRepository } from '../repository/user.repository';
 import { UserService } from '../service/user.service';
 import { AdminRepository } from '../repository/admin.repository';
 import { AdminService } from '../service/admin.service';
+import validateRouter from '../middleware/validateRouter';
+import * as authSchema from '../schema/auth.schema';
 import { Token } from '../provider/token';
 import { Crypto } from '../provider/crypto';
 
