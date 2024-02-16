@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { ICryptoProvider } from './ICrypto'
+import { ICryptoProvider } from './interface/ICrypto'
 
 export class Crypto implements ICryptoProvider {
   async cryptoPassword(password: string) {
