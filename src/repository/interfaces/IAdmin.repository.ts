@@ -1,5 +1,5 @@
 export interface IAdminRepository {
-  findAdminByEmail: (email: string) => object;
+  findAdminByEmail: (email: string) => object
 
-  findAdminById: (id: string) => object;
-};
+  findAdminById: (id: string) => object
+}

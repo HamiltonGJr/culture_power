@@ -8,7 +8,7 @@ export interface IProduct {
   updateAt: Date
   _id: string
   __v: number
-};
+}
 
 export interface IProductDTO {
   name: string
@@ -16,4 +16,4 @@ export interface IProductDTO {
   amount: number
   description: string
   photo: string
-};
+}

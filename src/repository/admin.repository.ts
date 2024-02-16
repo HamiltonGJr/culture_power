@@ -1,12 +1,12 @@
-import { Admin } from '../model/Admin';
-import { IAdminRepository } from './interfaces/IAdmin.repository';
+import { Admin } from '../model/Admin'
+import { IAdminRepository } from './interfaces/IAdmin.repository'
 
-export class AdminRepository implements IAdminRepository{
+export class AdminRepository implements IAdminRepository {
   async findAdminByEmail(email: string) {
-    return await Admin.findOne({ email }).exec();
-  };
+    return await Admin.findOne({ email }).exec()
+  }
 
   async findAdminById(id: string) {
-    return await Admin.findById(id).exec();
-  };
-};
+    return await Admin.findById(id).exec()
+  }
+}

@@ -1,35 +1,35 @@
-import { mongoose } from '../config/connection';
-import { IProduct } from '../entities/IProduct';
+import { mongoose } from '../config/connection'
+import { IProduct } from '../entities/IProduct'
 
 const ProductSchema = new mongoose.Schema<IProduct>({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   value: {
     type: Number,
-    required: true
+    required: true,
   },
   amount: {
     type: Number,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   photo: {
     type: String,
-    default: '_photo_'
+    default: '_photo_',
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: new Date(),
   },
   updateAt: {
     type: Date,
-    default: new Date()
-  }
-});
+    default: new Date(),
+  },
+})
 
-export const Product = mongoose.model<IProduct>('products', ProductSchema);
+export const Product = mongoose.model<IProduct>('products', ProductSchema)

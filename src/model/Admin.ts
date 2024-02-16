@@ -1,24 +1,24 @@
-import { mongoose } from '../config/connection';
-import { IAdmin } from '../entities/IAdmin';
+import { mongoose } from '../config/connection'
+import { IAdmin } from '../entities/IAdmin'
 
 const AdminSchema = new mongoose.Schema<IAdmin>({
   name: {
-    type: String
+    type: String,
   },
   email: {
-    type: String
+    type: String,
   },
   password: {
-    type: String
+    type: String,
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: new Date(),
   },
   updateAt: {
     type: Date,
-    default: new Date()
-  }
-});
+    default: new Date(),
+  },
+})
 
-export const Admin = mongoose.model<IAdmin>('admins', AdminSchema);
+export const Admin = mongoose.model<IAdmin>('admins', AdminSchema)

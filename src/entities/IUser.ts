@@ -1,4 +1,4 @@
-import { Product } from "../model/Product"
+import { Product } from '../model/Product'
 
 export interface IUser {
   name: string
@@ -11,7 +11,7 @@ export interface IUser {
   updateAt: Date
   _id: string
   __v: number
-};
+}
 
 export interface IUserDTO {
   name: string
@@ -20,4 +20,4 @@ export interface IUserDTO {
   jewelsAmount: number
   products: string
   photo: string
-};
+}

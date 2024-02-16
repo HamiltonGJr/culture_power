@@ -1,5 +1,5 @@
 export interface IAdminService {
-  adminByEmail: (email: string) => object;
+  adminByEmail: (email: string) => object
 
-  adminById: (id: string) => object;
-};
+  adminById: (id: string) => object
+}

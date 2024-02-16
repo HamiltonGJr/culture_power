@@ -6,10 +6,10 @@ export interface IAdmin {
   updateAt: Date
   _id: string
   __v: number
-};
+}
 
 export interface IAdminDTO {
   name: string
   email: string
   password: string
-};
+}

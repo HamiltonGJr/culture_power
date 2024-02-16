@@ -1,15 +1,15 @@
-import { Router } from 'express';
-import { ProductRepository } from '../repository/product.repository';
-import { ProductService } from '../service/product.service';
-import validateRouter from '../middleware/validateRouter';
-import * as productSchema from '../schema/product.schema';
-import { auth } from '../middleware/auth';
-import { isAdmin } from '../middleware/verifyPermission';
+import { Router } from 'express'
+import { ProductRepository } from '../repository/product.repository'
+import { ProductService } from '../service/product.service'
+import validateRouter from '../middleware/validateRouter'
+import * as productSchema from '../schema/product.schema'
+import { auth } from '../middleware/auth'
+import { isAdmin } from '../middleware/verifyPermission'
 
-const router = Router();
+const router = Router()
 
-const repository = new ProductRepository();
-const service = new ProductService(repository);
+const repository = new ProductRepository()
+const service = new ProductService(repository)
 
 router.post(
   '/',
@@ -17,7 +17,7 @@ router.post(
   auth,
   isAdmin,
   async (request, response) => {
-    const { name, value, amount, description, photo } = request.body;
+    const { name, value, amount, description, photo } = request.body
 
     const newProduct = await service.create(
       name,
@@ -25,13 +25,13 @@ router.post(
       amount,
       description,
       photo
-    );
+    )
     if (!newProduct)
-      return response.status(404).send({ error: 'Product creation failed.' });
+      return response.status(404).send({ error: 'Product creation failed.' })
 
-    response.status(201).send({ newProduct });
+    response.status(201).send({ newProduct })
   }
-);
+)
 
 router.put(
   '/:id',
@@ -39,8 +39,8 @@ router.put(
   auth,
   isAdmin,
   async (request, response) => {
-    const { name, value, amount, description, photo } = request.body;
-    const { id } = request.params;
+    const { name, value, amount, description, photo } = request.body
+    const { id } = request.params
 
     const productUpdate = await service.update(
       id,
@@ -49,54 +49,45 @@ router.put(
       amount,
       description,
       photo
-    );
+    )
     if (!productUpdate)
-      return response.status(404).send({ error: 'Products not found.' });
+      return response.status(404).send({ error: 'Products not found.' })
 
-    const existProduct = await service.userById(id);
+    const existProduct = await service.userById(id)
     if (!existProduct)
-      return response.status(404).send({ error: 'Products not found.' });
+      return response.status(404).send({ error: 'Products not found.' })
 
-    existProduct.updateAt = new Date();
+    existProduct.updateAt = new Date()
 
-    const productUpdated = await service.productUpdated(existProduct);
+    const productUpdated = await service.productUpdated(existProduct)
 
-    response.status(200).send({ product: productUpdated });
+    response.status(200).send({ product: productUpdated })
   }
-);
+)
 
-router.get(
-  '/',
-  auth,
-  async (request, response) => {
-    const amount = 0;
+router.get('/', auth, async (request, response) => {
+  const amount = 0
 
-    const products = await service.find();
-    if (!products)
-      return response.status(404).send({ error: 'Products not found.' });
+  const products = await service.find()
+  if (!products)
+    return response.status(404).send({ error: 'Products not found.' })
 
-    const productsFilter = products.filter(
-      (products) =>
-      products.amount > 0 &&
-      (amount === undefined || products.amount >= amount)
-    );
+  const productsFilter = products.filter(
+    (products) =>
+      products.amount > 0 && (amount === undefined || products.amount >= amount)
+  )
 
-    response.status(200).send({ productsFilter });
-  }
-);
+  response.status(200).send({ productsFilter })
+})
 
-router.get(
-  '/:id',
-  auth,
-  async (request, response) => {
-    const { id } = request.params;
+router.get('/:id', auth, async (request, response) => {
+  const { id } = request.params
 
-    const product = await service.findId(id);
-    if (!product)
-      return response.status(404).send({ error: 'Products not found.' });
+  const product = await service.findId(id)
+  if (!product)
+    return response.status(404).send({ error: 'Products not found.' })
 
-    response.status(200).send({ product });
-  }
-);
+  response.status(200).send({ product })
+})
 
-export default router;
+export default router
