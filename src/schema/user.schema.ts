@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { IUserDTO } from '../entitie/IUser';
+import { IUserDTO } from '../entities/IUser';
 import { TypedRequest } from '../util/typedRequest';
 
 const UserSchema = Yup.object<IUserDTO>({
@@ -7,7 +7,7 @@ const UserSchema = Yup.object<IUserDTO>({
   email: Yup.string().required().email(),
   password: Yup.string().required().min(8),
   jewelsAmount: Yup.number().default(0),
-  products: Yup.object(),
+  products: Yup.string(),
   photo: Yup.string().default('_photo_')
 });
 

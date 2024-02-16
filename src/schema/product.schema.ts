@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { IProductDTO } from '../entitie/IProduct';
+import { IProductDTO } from '../entities/IProduct';
 import { TypedRequest } from '../util/typedRequest';
 
 const productSchema = Yup.object<IProductDTO>({
