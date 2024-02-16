@@ -3,8 +3,11 @@ import { UserService } from '../service/user.service';
 import { UserRepository } from '../repository/user.repository';
 import { AdminRepository } from '../repository/admin.repository';
 import { AdminService } from '../service/admin.service';
+import { ProductService } from '../service/product.service';
+import { ProductRepository } from '../repository/product.repository';
 import * as userSchema from '../schema/user.schema';
 import * as photoSchema from '../schema/photo.schema';
+import * as jewelsAmountSchema from '../schema/amount.schema';
 import validateRouter from '../middleware/validateRouter';
 import { auth } from '../middleware/auth';
 import { upload } from '../middleware/uploads';
@@ -19,6 +22,9 @@ const userService = new UserService(userRepository);
 const adminRepository = new AdminRepository();
 const adminService = new AdminService(adminRepository);
 
+const productRepository = new ProductRepository();
+const productService = new ProductService(productRepository);
+
 const crypto = new Crypto();
 
 router.post(
@@ -27,7 +33,6 @@ router.post(
   auth,
   isAdmin,
   async (request, response) => {
-    console.log(request.body.userId);
     const { name, email, password, jewelsAmount, photo } = request.body;
 
     const existUser = await userService.userByEmail(email);
@@ -48,6 +53,39 @@ router.post(
   }
 );
 
+router.post(
+  '/productExchange',
+  auth,
+  async (request, response) => {
+    const { idUser, idProduct } = request.body;
+
+    const user: any = await userService.userById(idUser);
+    const product: any = await productService.findId(idProduct);
+
+    if (!user || !product)
+      return response.status(404).send({ erros: 'User or Products not found.' });
+
+    if(user.jewelsAmount < product.value) {
+      response.status(404).send({ error: 'Insufficient balance to redeem the product.' });
+    } else {
+      user.jewelsAmount -= product.value;
+      user.products.push(product)
+
+      await userService.userIdAndUpdate(idUser, user);
+
+      if (product.amount > 0) {
+        product.amount--
+      } else {
+        response.status(400).send({ error: 'Não há este produto em estoque no momento' });
+      }
+
+      await productService.productIdAndUpdate(idProduct, product);
+    }
+
+    response.status(200).send({ menssage: 'O produto foi resgatado com sucesso!' });
+  }
+);
+
 router.patch(
   '/uploadPhoto/:id',
   validateRouter(photoSchema.CreatePerson.schema),
@@ -65,12 +103,36 @@ router.patch(
     if (!existUser)
       return response.status(404).send({ message: 'Error: User not found.' });
 
-    existUser.__v += 1;
-    existUser.uptadeAt = new Date();
+    existUser.updateAt = new Date();
 
-    const userUpdatedPhoto = await userService.userUpdatedPhoto(existUser);
+    const userUpdatedPhoto = await userService.userUpdated(existUser);
 
-    response.status(200).send(userUpdatedPhoto);
+    response.status(200).send({ userUpdate: userUpdatedPhoto });
+  }
+);
+
+router.patch(
+  '/:id',
+  validateRouter(jewelsAmountSchema.CreatePerson.schema),
+  auth,
+  isAdmin,
+  async (request, response) => {
+    const { id } = request.params;
+    const { jewelsAmount } = request.body;
+
+    const jewelsToUpdated = await userService.userUpdatedJewels(id, jewelsAmount);
+    if (!jewelsToUpdated)
+      return response.status(404).send({ error: 'User not found.' });
+
+    const existUser = await userService.userById(id);
+    if (!existUser)
+        return response.status(404).send({ error: 'User not found.' });
+
+    existUser.updateAt = new Date();
+
+    const userUpdatedJewels = await userService.userUpdated(existUser);
+
+    response.status(200).send({ userUpdate: userUpdatedJewels });
   }
 );
 
