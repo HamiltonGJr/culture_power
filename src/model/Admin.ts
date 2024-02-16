@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IAdmin } from '../entitie/IAdmin';
+import { IAdmin } from '../entities/IAdmin';
 
 const AdminSchema = new mongoose.Schema<IAdmin>({
   name: {
@@ -15,7 +15,7 @@ const AdminSchema = new mongoose.Schema<IAdmin>({
     type: Date,
     default: new Date()
   },
-  uptadeAt: {
+  updateAt: {
     type: Date,
     default: new Date()
   }

@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IUser } from '../entitie/IUser'
+import { IUser } from '../entities/IUser'
 
 const UserSchema = new mongoose.Schema<IUser>({
   name: {
@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema<IUser>({
     type: Number,
     default: 0
   },
-  products: {
+  products: [{
     type: mongoose.Types.ObjectId,
     ref: 'products'
-  },
+  }],
   photo: {
     type: String,
     default: '_photo_'
@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema<IUser>({
     type: Date,
     default: new Date()
   },
-  uptadeAt: {
+  updateAt: {
     type: Date,
     default: new Date()
   }

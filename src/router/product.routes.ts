@@ -57,8 +57,7 @@ router.put(
     if (!existProduct)
       return response.status(404).send({ error: 'Products not found.' });
 
-    existProduct.__v += 1;
-    existProduct.uptadeAt = new Date();
+    existProduct.updateAt = new Date();
 
     const productUpdated = await service.productUpdated(existProduct);
 

@@ -1,5 +1,5 @@
 import { mongoose } from '../config/connection';
-import { IProduct } from '../entitie/IProduct';
+import { IProduct } from '../entities/IProduct';
 
 const ProductSchema = new mongoose.Schema<IProduct>({
   name: {
@@ -26,7 +26,7 @@ const ProductSchema = new mongoose.Schema<IProduct>({
     type: Date,
     default: new Date()
   },
-  uptadeAt: {
+  updateAt: {
     type: Date,
     default: new Date()
   }
