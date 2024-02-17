@@ -150,20 +150,21 @@ router.patch(
 router.get('/', auth, async (request, response) => {
   const id = request.body.userId.sub
 
-  const userId = await userService.userById(id)
-  if (id === userId?._id.toString()) {
-    userId!.password = ''
-    response.status(201).send({ user: userId })
-    return
+  // Verifica se o ID pertence a um usuário
+  const user = await userService.userById(id)
+  if (id === user?._id.toString()) {
+    user!.password = '' // Remova a senha antes de enviar o usuário
+    return response.status(200).send({ user })
   }
 
-  const adminId = await adminService.adminById(id)
-  if (id === adminId?._id.toString()) {
-    adminId!.password = ''
-    response.status(201).send({ admin: adminId })
-    return
+  // Se nenhum usuário ou administrador for encontrado
+  const admin = await adminService.adminById(id)
+  if (id === admin?._id.toString()) {
+    admin!.password = '' // Remova a senha antes de enviar o administrador
+    return response.status(200).send({ admin })
   }
 
+  // Se nenhum usuário ou administrador for encontrado
   response.status(404).send({ message: 'Error: User not found.' })
 })
 
