@@ -29,10 +29,10 @@ router.post(
     )
 
     // Verifica se a criação foi bem-sucedida
-    if (newProduct) return response.status(201).send({ newProduct })
-
     if (!newProduct)
       return response.status(400).send({ error: 'Product creation failed.' })
+
+    response.status(201).send({ product: newProduct })
   }
 )
 
@@ -81,7 +81,7 @@ router.get('/', auth, async (request, response) => {
       products.amount > 0 && (amount === undefined || products.amount >= amount)
   )
 
-  response.status(200).send({ productsFilter })
+  response.status(200).send({ products: productsFilter })
 })
 
 router.get('/:id', auth, async (request, response) => {
