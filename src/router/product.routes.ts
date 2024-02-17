@@ -19,6 +19,7 @@ router.post(
   async (request, response) => {
     const { name, value, amount, description, photo } = request.body
 
+    // Criação do produto
     const newProduct = await service.create(
       name,
       value,
@@ -26,10 +27,12 @@ router.post(
       description,
       photo
     )
-    if (!newProduct)
-      return response.status(404).send({ error: 'Product creation failed.' })
 
-    response.status(201).send({ newProduct })
+    // Verifica se a criação foi bem-sucedida
+    if (newProduct) return response.status(201).send({ newProduct })
+
+    if (!newProduct)
+      return response.status(400).send({ error: 'Product creation failed.' })
   }
 )
 
