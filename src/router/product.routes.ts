@@ -60,9 +60,9 @@ router.put(
     if (!productUpdate || !existProduct)
       return response.status(404).send({ error: 'Products not found.' })
 
-    // Aqui você pode retornar o produto atualizado, se necessário
     existProduct.updateAt = new Date()
 
+    // Aqui você pode retornar o produto atualizado, se necessário
     const productUpdated = await service.productUpdated(existProduct)
 
     response.status(200).send({ product: productUpdated })
