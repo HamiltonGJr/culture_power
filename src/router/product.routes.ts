@@ -45,6 +45,7 @@ router.put(
     const { name, value, amount, description, photo } = request.body
     const { id } = request.params
 
+    // Aqui você atualiza o produto
     const productUpdate = await service.update(
       id,
       name,
@@ -53,13 +54,13 @@ router.put(
       description,
       photo
     )
-    if (!productUpdate)
-      return response.status(404).send({ error: 'Products not found.' })
 
+    // Aqui você verifica algum erro na atualização ou na identificação do produto
     const existProduct = await service.userById(id)
-    if (!existProduct)
+    if (!productUpdate || !existProduct)
       return response.status(404).send({ error: 'Products not found.' })
 
+    // Aqui você pode retornar o produto atualizado, se necessário
     existProduct.updateAt = new Date()
 
     const productUpdated = await service.productUpdated(existProduct)
