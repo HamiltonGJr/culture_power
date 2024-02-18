@@ -27,6 +27,7 @@ const productService = new ProductService(productRepository)
 
 const crypto = new Crypto()
 
+// 1. Criação de usuário
 router.post(
   '/',
   validateRouter(userSchema.CreatePerson.schema),
@@ -58,39 +59,49 @@ router.post(
   }
 )
 
+// 10. Resgata o produto
 router.post('/productExchange', auth, async (request, response) => {
   const { idUser, idProduct } = request.body
 
   const user: any = await userService.userById(idUser)
   const product: any = await productService.findId(idProduct)
 
+  // Verifica se o usuário e o produto foram encontrados
   if (!user || !product)
     return response.status(404).send({ erros: 'User or Products not found.' })
 
+  // Verifica se o usuário tem saldo suficiente para resgatar o produto
   if (user.jewelsAmount < product.value) {
     response
       .status(404)
       .send({ error: 'Insufficient balance to redeem the product.' })
   } else {
+    // Deduz o valor do produto do saldo do usuário e adiciona o produto à sua lista
     user.jewelsAmount -= product.value
     user.products.push(product)
 
+    // Atualiza as informações do usuário na base de dados
     await userService.userIdAndUpdate(idUser, user)
 
+    // Reduz a quantidade disponível do produto em estoque
     if (product.amount > 0) {
       product.amount--
     } else {
+      // Se não houver estoque suficiente do produto, retorna um erro
       response
         .status(400)
-        .send({ error: 'Não há este produto em estoque no momento' })
+        .send({ error: 'This product is not in stock at the moment' })
     }
 
+    // Atualiza as informações do produto na base de dados
     await productService.productIdAndUpdate(idProduct, product)
   }
 
-  response.status(200).send({ message: 'O produto foi resgatado com sucesso!' })
+  // Responde com uma mensagem indicando o sucesso do resgate do produto
+  response.status(200).send({ user, product })
 })
 
+// Não obrigatório. Envia a foto do usuário
 router.patch(
   '/uploadPhoto/:id',
   validateRouter(photoSchema.CreatePerson.schema),
@@ -100,25 +111,33 @@ router.patch(
     const { file } = request
     const { id } = request.params
 
+    // Atualiza a foto do usuário com o ID especificado
     const photoToUpdate = await userService.userByIdAndUpdate(
       id,
       file as Express.Multer.File
     )
+
+    // Verifica se a atualização da foto foi bem-sucedida
     if (!photoToUpdate)
       return response.status(404).send({ message: 'Error: User not found.' })
 
+    // Recupera o usuário atualizado da base de dados e verifica se o usuário existe
     const existUser = await userService.userById(id)
     if (!existUser)
       return response.status(404).send({ message: 'Error: User not found.' })
 
+    // Atualiza o campo 'updatedAt' do usuário com a data atual
     existUser.updateAt = new Date()
 
+    // Atualiza as informações do usuário na base de dados
     const userUpdatedPhoto = await userService.userUpdated(existUser)
 
+    // Responde com o usuário atualizado, incluindo a foto nova
     response.status(200).send({ userUpdate: userUpdatedPhoto })
   }
 )
 
+// 9. Enviar Joia para Usuário
 router.patch(
   '/:id',
   validateRouter(jewelsAmountSchema.CreatePerson.schema),
@@ -128,6 +147,7 @@ router.patch(
     const { id } = request.params
     const { jewelsAmount } = request.body
 
+    // Atualiza a quantidade de joias do usuário com o ID especificado e verifica se a atualização da quantidade de joias foi bem-sucedida
     const jewelsToUpdated = await userService.userUpdatedJewels(
       id,
       jewelsAmount
@@ -135,18 +155,22 @@ router.patch(
     if (!jewelsToUpdated)
       return response.status(404).send({ error: 'User not found.' })
 
+    // Recupera o usuário da base de dados e verifica se o usuário existe
     const existUser = await userService.userById(id)
     if (!existUser)
       return response.status(404).send({ error: 'User not found.' })
 
     existUser.updateAt = new Date()
 
+    // Atualiza as informações do usuário na base de dados
     const userUpdatedJewels = await userService.userUpdated(existUser)
 
+    // Responde com o usuário atualizado, incluindo a quantidade de joias atualizada
     response.status(200).send({ userUpdate: userUpdatedJewels })
   }
 )
 
+// 4. Mostrar usuário logado
 router.get('/', auth, async (request, response) => {
   const id = request.body.userId.sub
 

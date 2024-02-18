@@ -19,6 +19,7 @@ const adminService = new AdminService(adminRepository)
 const tokenJWT = new Token()
 const cryptoBC = new Crypto()
 
+// 2. | 3. Gera o token
 router.post(
   '/',
   validateRouter(authSchema.CreatePerson.schema),
